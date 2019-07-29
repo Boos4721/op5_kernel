@@ -570,13 +570,20 @@ static void sde_encoder_virt_disable(struct drm_encoder *drm_enc)
 			phys->ops.post_disable(phys);
 	}
 
-	sde_enc->cur_master = NULL;
-	SDE_DEBUG_ENC(sde_enc, "cleared master\n");
+extern int op_dimlayer_bl_enable;
+extern bool sde_crtc_get_dimlayer_mode(struct drm_crtc_state *crtc_state);
+
+static bool
+_sde_encoder_setup_dither_for_onscreenfingerprint(struct sde_encoder_phys *phys,
+						  void *dither_cfg, int len)
+{
+	struct drm_encoder *drm_enc = phys->parent;
+	struct drm_msm_dither dither;
 
 	sde_rm_release(&sde_kms->rm, drm_enc);
 
-	sde_power_resource_enable(&priv->phandle, sde_kms->core_client, false);
-}
+	if (!sde_crtc_get_dimlayer_mode(drm_enc->crtc->state))
+		return -EINVAL;
 
 static const struct drm_encoder_helper_funcs sde_encoder_helper_funcs = {
 	.mode_set = sde_encoder_virt_mode_set,
@@ -817,10 +824,59 @@ static inline void _sde_encoder_trigger_start(struct sde_encoder_phys *phys)
 		phys->ops.trigger_start(phys);
 }
 
-void sde_encoder_helper_trigger_start(struct sde_encoder_phys *phys_enc)
+extern int sde_connector_update_backlight(struct drm_connector *conn);
+int sde_encoder_prepare_for_kickoff(struct drm_encoder *drm_enc,
+		struct sde_encoder_kickoff_params *params)
 {
-	struct sde_hw_ctl *ctl;
-	int ctl_idx = -1;
+	struct sde_encoder_virt *sde_enc;
+	struct sde_encoder_phys *phys;
+	struct sde_kms *sde_kms = NULL;
+	struct msm_drm_private *priv = NULL;
+	bool needs_hw_reset = false;
+	uint32_t ln_cnt1, ln_cnt2;
+	unsigned int i;
+	int rc, ret = 0;
+
+	if (!drm_enc || !params || !drm_enc->dev ||
+		!drm_enc->dev->dev_private) {
+		SDE_ERROR("invalid args\n");
+		return -EINVAL;
+	}
+	sde_enc = to_sde_encoder_virt(drm_enc);
+	priv = drm_enc->dev->dev_private;
+	sde_kms = to_sde_kms(priv->kms);
+
+	SDE_DEBUG_ENC(sde_enc, "\n");
+	SDE_EVT32(DRMID(drm_enc));
+
+	/* save this for later, in case of errors */
+	if (sde_enc->cur_master && sde_enc->cur_master->ops.get_wr_line_count)
+		ln_cnt1 = sde_enc->cur_master->ops.get_wr_line_count(
+				sde_enc->cur_master);
+	else
+		ln_cnt1 = -EINVAL;
+	
+	if (sde_enc->cur_master)
+		sde_connector_update_backlight(sde_enc->cur_master->connector);
+
+	/* prepare for next kickoff, may include waiting on previous kickoff */
+	SDE_ATRACE_BEGIN("enc_prepare_for_kickoff");
+	for (i = 0; i < sde_enc->num_phys_encs; i++) {
+		phys = sde_enc->phys_encs[i];
+		params->is_primary = sde_enc->disp_info.is_primary;
+		if (phys) {
+			if (phys->ops.prepare_for_kickoff) {
+				rc = phys->ops.prepare_for_kickoff(
+						phys, params);
+				if (rc)
+					ret = rc;
+			}
+			if (phys->enable_state == SDE_ENC_ERR_NEEDS_HW_RESET)
+				needs_hw_reset = true;
+			_sde_encoder_setup_dither(phys);
+		}
+	}
+	SDE_ATRACE_END("enc_prepare_for_kickoff");
 
 	if (!phys_enc) {
 		SDE_ERROR("invalid encoder\n");

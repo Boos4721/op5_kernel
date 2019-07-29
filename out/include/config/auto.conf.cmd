@@ -1058,7 +1058,7 @@ deps_config := \
 include/config/auto.conf: \
 	$(deps_config)
 
-ifneq "$(KERNELVERSION)" "4.4.217-rc1"
+ifneq "$(KERNELVERSION)" "4.4.217"
 include/config/auto.conf: FORCE
 endif
 ifneq "$(PATCHLEVEL)" "4"

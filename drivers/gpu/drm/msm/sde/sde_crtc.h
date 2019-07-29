@@ -170,8 +170,47 @@ struct sde_crtc_state {
 	struct drm_property_blob *property_blobs[CRTC_PROP_COUNT];
 
 	struct sde_core_perf_params new_perf;
+<<<<<<< HEAD
 	bool is_shared;
 	struct sde_rect shared_roi;
+=======
+	struct sde_ctl_sbuf_cfg sbuf_cfg;
+	u32 sbuf_prefill_line;
+	u64 sbuf_clk_rate[2];
+	bool sbuf_clk_shifted;
+
+		bool fingerprint_mode;
+		bool fingerprint_pressed;
+		struct sde_hw_dim_layer *fingerprint_dim_layer;
+
+	struct sde_crtc_respool rp;
+};
+
+enum sde_crtc_irq_state {
+	IRQ_NOINIT,
+	IRQ_ENABLED,
+	IRQ_DISABLING,
+	IRQ_DISABLED,
+};
+
+/**
+ * sde_crtc_irq_info - crtc interrupt info
+ * @irq: interrupt callback
+ * @event: event type of the interrupt
+ * @func: function pointer to enable/disable the interrupt
+ * @list: list of user customized event in crtc
+ * @state: state of the interrupt
+ * @state_lock: spin lock for interrupt state
+ */
+struct sde_crtc_irq_info {
+	struct sde_irq_callback irq;
+	u32 event;
+	int (*func)(struct drm_crtc *crtc, bool en,
+			struct sde_irq_callback *irq);
+	struct list_head list;
+	enum sde_crtc_irq_state state;
+	spinlock_t state_lock;
+>>>>>>> 9035ff547806c... dispaly : changed for DC dimming
 };
 
 #define to_sde_crtc_state(x) \
