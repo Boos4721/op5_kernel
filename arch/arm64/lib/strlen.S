@@ -39,6 +39,7 @@ zeroones	.req	x11
 #define REP8_80 0x8080808080808080
 #define MIN_PAGE_SIZE 4096
 
+.align  6
 ENTRY(strlen)
 	and	tmp1, srcin, MIN_PAGE_SIZE - 1
 	mov	zeroones, REP8_01

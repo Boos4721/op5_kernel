@@ -51,6 +51,7 @@
 #define tmp1		x7
 #define tmp2		x8
 
+.align	6
 ENTRY(memcmp)
 	subs	limit, limit, 8
 	b.lo	.Lless8
