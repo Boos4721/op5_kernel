@@ -304,8 +304,13 @@ static void vmpressure_global(gfp_t gfp, unsigned long scanned,
 	unsigned long pressure;
 	unsigned long stall;
 
-	if (!scanned)
-		return;
+	if (scanned) {
+		spin_lock(&vmpr->sr_lock);
+		if (!vmpr->scanned)
+			calculate_vmpressure_win();
+
+		vmpr->scanned += scanned;
+		vmpr->reclaimed += reclaimed;
 
 		if (!current_is_kswapd())
 			vmpr->stall += scanned;
@@ -315,7 +320,7 @@ static void vmpressure_global(gfp_t gfp, unsigned long scanned,
 		reclaimed = vmpr->reclaimed;
 		spin_unlock(&vmpr->sr_lock);
 
-		if (!critical && scanned < calculate_vmpressure_win())
+		if (scanned < vmpressure_win)
 			return;
 	}
 
