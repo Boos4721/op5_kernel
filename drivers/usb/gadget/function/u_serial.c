@@ -777,9 +777,6 @@ static int gs_start_io(struct gs_port *port)
 	port->n_read = 0;
 	started = gs_start_rx(port);
 
-	if (!port->port_usb)
-		return -EIO;
-
 	if (started) {
 		gs_start_tx(port);
 		/* Unblock any pending writes into our circular buffer, in case
