@@ -239,8 +239,7 @@ static void vmpressure_work_fn(struct work_struct *work)
 	} while ((vmpr = vmpressure_parent(vmpr)));
 }
 
-static void vmpressure_memcg(gfp_t gfp, struct mem_cgroup *memcg,
-			     unsigned long scanned, unsigned long reclaimed)
+static unsigned long calculate_vmpressure_win(void)
 {
 	long x;
 
@@ -274,30 +273,7 @@ static void vmpressure_memcg(gfp_t gfp, struct mem_cgroup *memcg,
 	schedule_work(&vmpr->work);
 }
 
-static void calculate_vmpressure_win(void)
-{
-	long x;
-
-	x = global_page_state(NR_FILE_PAGES) -
-			global_page_state(NR_SHMEM) -
-			total_swapcache_pages() +
-			global_page_state(NR_FREE_PAGES);
-	if (x < 1)
-		x = 1;
-	/*
-	 * For low (free + cached), vmpressure window should be
-	 * small, and high for higher values of (free + cached).
-	 * But it should not be linear as well. This ensures
-	 * timely vmpressure notifications when system is under
-	 * memory pressure, and optimal number of events when
-	 * cached is high. The sqaure root function is empirically
-	 * found to serve the purpose.
-	 */
-	x = int_sqrt(x);
-	vmpressure_win = x;
-}
-
-static void vmpressure_global(gfp_t gfp, unsigned long scanned,
+static void vmpressure_global(gfp_t gfp, unsigned long scanned, bool critical,
 			      unsigned long reclaimed)
 {
 	struct vmpressure *vmpr = &global_vmpressure;
