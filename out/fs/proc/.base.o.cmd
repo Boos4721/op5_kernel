@@ -4,6 +4,7 @@ source_fs/proc/base.o := ../fs/proc/base.c
 
 deps_fs/proc/base.o := \
     $(wildcard include/config/hardwall.h) \
+    $(wildcard include/config/proc/gamingblocker.h) \
     $(wildcard include/config/kallsyms.h) \
     $(wildcard include/config/stacktrace.h) \
     $(wildcard include/config/sched/info.h) \
