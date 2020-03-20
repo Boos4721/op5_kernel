@@ -1,0 +1,1 @@
+cmd_drivers/media/platform/msm/camera_v2/sensor/ois/built-in.o :=  aarch64-linux-gnu-ld -EL    -r -o drivers/media/platform/msm/camera_v2/sensor/ois/built-in.o drivers/media/platform/msm/camera_v2/sensor/ois/msm_ois.o 

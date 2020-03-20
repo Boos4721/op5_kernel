@@ -1,0 +1,1 @@
+cmd_drivers/input/fingerprint/built-in.o :=  aarch64-linux-gnu-ld -EL    -r -o drivers/input/fingerprint/built-in.o drivers/input/fingerprint/fingerprint_detect/built-in.o drivers/input/fingerprint/fpc/built-in.o drivers/input/fingerprint/goodix/built-in.o 

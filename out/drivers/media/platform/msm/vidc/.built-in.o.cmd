@@ -1,0 +1,1 @@
+cmd_drivers/media/platform/msm/vidc/built-in.o :=  aarch64-linux-gnu-ld -EL    -r -o drivers/media/platform/msm/vidc/built-in.o drivers/media/platform/msm/vidc/msm-vidc.o drivers/media/platform/msm/vidc/governors/built-in.o drivers/media/platform/msm/vidc/vmem/built-in.o 

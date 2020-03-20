@@ -1,0 +1,1 @@
+cmd_drivers/input/touchscreen/built-in.o :=  aarch64-linux-gnu-ld -EL    -r -o drivers/input/touchscreen/built-in.o drivers/input/touchscreen/synaptics_driver_s3320.o drivers/input/touchscreen/sweep2sleep.o 

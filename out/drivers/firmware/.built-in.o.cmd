@@ -1,0 +1,1 @@
+cmd_drivers/firmware/built-in.o :=  aarch64-linux-gnu-ld -EL    -r -o drivers/firmware/built-in.o drivers/firmware/psci.o drivers/firmware/qcom_scm.o drivers/firmware/qcom_scm-64.o drivers/firmware/broadcom/built-in.o drivers/firmware/qcom/built-in.o 

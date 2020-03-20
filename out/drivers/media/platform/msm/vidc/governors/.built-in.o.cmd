@@ -1,0 +1,1 @@
+cmd_drivers/media/platform/msm/vidc/governors/built-in.o :=  aarch64-linux-gnu-ld -EL    -r -o drivers/media/platform/msm/vidc/governors/built-in.o drivers/media/platform/msm/vidc/governors/msm-vidc-dyn-gov.o drivers/media/platform/msm/vidc/governors/msm-vidc-table-gov.o 

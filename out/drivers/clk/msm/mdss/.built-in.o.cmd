@@ -1,0 +1,1 @@
+cmd_drivers/clk/msm/mdss/built-in.o :=  aarch64-linux-gnu-ld -EL    -r -o drivers/clk/msm/mdss/built-in.o drivers/clk/msm/mdss/mdss-pll-util.o drivers/clk/msm/mdss/mdss-pll.o drivers/clk/msm/mdss/mdss-dsi-pll-8998.o drivers/clk/msm/mdss/mdss-dp-pll-8998.o drivers/clk/msm/mdss/mdss-dp-pll-8998-util.o drivers/clk/msm/mdss/mdss-hdmi-pll-8998.o 
