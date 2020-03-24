@@ -1,1 +1,0 @@
-cmd_drivers/scsi/ufs/built-in.o :=  aarch64-linux-gnu-ld -EL    -r -o drivers/scsi/ufs/built-in.o drivers/scsi/ufs/ufs-qcom.o drivers/scsi/ufs/ufs-qcom-ice.o drivers/scsi/ufs/ufshcd.o drivers/scsi/ufs/ufs_quirks.o drivers/scsi/ufs/ufshcd-pltfrm.o 

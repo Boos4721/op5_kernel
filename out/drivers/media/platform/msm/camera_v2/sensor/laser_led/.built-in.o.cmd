@@ -1,1 +1,0 @@
-cmd_drivers/media/platform/msm/camera_v2/sensor/laser_led/built-in.o :=  aarch64-linux-gnu-ld -EL    -r -o drivers/media/platform/msm/camera_v2/sensor/laser_led/built-in.o drivers/media/platform/msm/camera_v2/sensor/laser_led/msm_laser_led.o 

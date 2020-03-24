@@ -1,1 +1,0 @@
-cmd_drivers/net/ethernet/cavium/built-in.o :=  aarch64-linux-gnu-ld -EL    -r -o drivers/net/ethernet/cavium/built-in.o drivers/net/ethernet/cavium/thunder/built-in.o drivers/net/ethernet/cavium/liquidio/built-in.o 

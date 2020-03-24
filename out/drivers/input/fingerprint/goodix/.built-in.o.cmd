@@ -1,1 +1,0 @@
-cmd_drivers/input/fingerprint/goodix/built-in.o :=  aarch64-linux-gnu-ld -EL    -r -o drivers/input/fingerprint/goodix/built-in.o drivers/input/fingerprint/goodix/gf_spi.o drivers/input/fingerprint/goodix/platform.o drivers/input/fingerprint/goodix/netlink.o 

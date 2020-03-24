@@ -1,1 +1,0 @@
-cmd_drivers/platform/msm/ipa/ipa_common := aarch64-linux-gnu-ld -EL    -r -o drivers/platform/msm/ipa/ipa_common drivers/platform/msm/ipa/ipa_api.o drivers/platform/msm/ipa/ipa_rm.o drivers/platform/msm/ipa/ipa_rm_dependency_graph.o drivers/platform/msm/ipa/ipa_rm_peers_list.o drivers/platform/msm/ipa/ipa_rm_resource.o drivers/platform/msm/ipa/ipa_rm_inactivity_timer.o 
