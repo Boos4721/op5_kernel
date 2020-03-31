@@ -760,7 +760,7 @@ KBUILD_CFLAGS	+= $(call cc-option, -mllvm -polly) \
 KBUILD_CFLAGS += $(call cc-disable-warning, format-invalid-specifier)
 KBUILD_CFLAGS += $(call cc-disable-warning, gnu)
 KBUILD_CFLAGS += $(call cc-disable-warning, duplicate-decl-specifier)
-KBUILD_AFLAGS   += -mcpu=cortex-a73 -mtune=cortex-a73
+KBUILD_AFLAGS += -mcpu=cortex-a73 -mtune=cortex-a73
 # Quiet clang warning: comparison of unsigned expression < 0 is always false
 KBUILD_CFLAGS += $(call cc-disable-warning, tautological-compare)
 # CLANG uses a _MergedGlobals as optimization, but this breaks modpost, as the
