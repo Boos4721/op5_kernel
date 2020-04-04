@@ -33,6 +33,13 @@
  #define MIN_SCALE 5120 /* Minimum value of RGB recommended */
 #endif
 
+#define RET_WORKGROUND
+#define RET_WORKGROUND_DELAY 500
+
+#ifdef CONFIG_FB_MSM_MDSS_KCAL_CTRL
+void kcal_ext_apply_values(int red, int green, int blue);
+#endif
+
 /* Constants - Customize as needed */
 static int elvss_off_threshold = 66; /* Minimum backlight value that does not fliker */
 
