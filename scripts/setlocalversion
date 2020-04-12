@@ -56,7 +56,7 @@ scm_version()
 				# If only the short version is requested,
 				# don't bother running further git commands
 				if $short; then
-					echo "+"
+					echo ""
 					return
 				fi
 				printf '%s%s' -g "`git show-ref -s --abbrev --tags $atag 2>/dev/null`"
@@ -177,7 +177,7 @@ if test ! "$srctree" -ef .; then
 fi
 
 # CONFIG_LOCALVERSION and LOCALVERSION (if set)
-res="${res}${CONFIG_LOCALVERSION}${LOCALVERSION}"
+res="${res}${CONFIG_LOCALVERSION}${LOCALVERSION}"-CI
 
 # scm version string if not at a tagged commit
 if test "$CONFIG_LOCALVERSION_AUTO" = "y"; then
